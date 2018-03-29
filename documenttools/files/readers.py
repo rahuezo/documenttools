@@ -1,6 +1,8 @@
 from extensions import ExtensionHandler
 from sanitizer import sanitize_string
 
+import sys 
+
 
 def read_docx(f):
     """
@@ -19,7 +21,8 @@ def read_docx(f):
         import docx
     except ImportError: 
         print 'You need to install docx. Try, sudo pip install python-docx'
-        return None
+        sys.exit()
+
     document = docx.Document(f)
     return ''.join([sanitize_string(p.text) for p in document.paragraphs])
 
@@ -50,14 +53,21 @@ class FileReader(ExtensionHandler):
     def __init__(self, input_file): 
         ExtensionHandler.__init__(self, input_file)
 
-    def read(self): 
+    def read(self, normalize=False): 
         extension = self.get_extension()
+        
+        content = None
 
         if extension == 'docx': 
-            return read_docx(self.input_file)
+            content = read_docx(self.input_file)
 
         elif extension == 'txt': 
-            return read_txt(self.input_file)
+            content = read_txt(self.input_file)
         else: 
             print '\nThis is an unsupported file of type {}\n'.format(extension)
-            return None
+            content = None
+
+        if normalize: 
+            return ' '.join(content.split())
+        else: 
+            return content
