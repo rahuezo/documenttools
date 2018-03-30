@@ -1,6 +1,13 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-from files.readers import FileReader
+import sys 
+
+try: 
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
+except ImportError: 
+    print "You need to install sklearn. Try, sudo pip install sklearn"
+    sys.exit()
+
+from documenttools.files.readers import FileReader
 
 SHINGLE_SIZE = 3
 
@@ -42,7 +49,8 @@ def compare_documents(content1, content2):
 
 class DocumentComparison: 
     @staticmethod
-    def get_filename(f, online=False):         
+    def get_filename(f, online=False): 
+        # Set online to True once used for website        
         return f if online else f.split('/')[-1]
 
     def __init__(self, files):
@@ -55,11 +63,11 @@ class DocumentComparison:
                 f1 = self.files[i]
                 f2 = self.files[j]
 
-                content1 = FileReader(DocumentComparison.get_filename(f1)).read()
-                content2 = FileReader(DocumentComparison.get_filename(f2)).read()
+                content1 = FileReader(f1).read()
+                content2 = FileReader(f2).read()
 
-                comparisons[(f1, f2)] = compare_documents(content1, content2)
-        return comparisons
+                comparisons[(DocumentComparison.get_filename(f1), DocumentComparison.get_filename(f2))] = compare_documents(content1, content2)
+        return comparisons if comparisons else None
 
         
 

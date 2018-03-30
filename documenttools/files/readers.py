@@ -49,11 +49,14 @@ class FileReader(ExtensionHandler):
     This class inherits from ExtensionHandler to detect file extensions
     and lets you read the contents of a file.
     """
+    @staticmethod
+    def normalize(content): 
+        return ' '.join(content.split())
 
     def __init__(self, input_file): 
         ExtensionHandler.__init__(self, input_file)
 
-    def read(self, normalize=False): 
+    def read(self): 
         extension = self.get_extension()
         
         content = None
@@ -67,7 +70,4 @@ class FileReader(ExtensionHandler):
             print '\nThis is an unsupported file of type {}\n'.format(extension)
             content = None
 
-        if normalize: 
-            return ' '.join(content.split())
-        else: 
-            return content
+        return content
