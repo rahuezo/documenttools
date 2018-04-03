@@ -1,0 +1,5 @@
+Node Overlap,Edge Overlap,Unique Nodes for A,Unique Nodes for B,Unique Edges for A,Unique Edges for B
+A,"('A', 'B')",,E,"('A', 'C')","('E', 'F')"
+C,"('C', 'B')",,F,,"('C', 'E')"
+B,"('C', 'D')",,,,
+D,,,,,

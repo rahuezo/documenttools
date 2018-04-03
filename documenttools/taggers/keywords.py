@@ -1,6 +1,6 @@
 from documenttools.files.readers import FileReader
 
-import re
+import re, os
 
 
 class KeywordTagger: 
@@ -35,17 +35,5 @@ class KeywordTagger:
 
             if keyword_occurrences: 
                 header = ', '.join(keyword_occurrences).upper()
-                yield KeywordTagger.create_tagged_content(header, content)
-
-
-
-
-        
-
-        
-        
-
-
-        
-
+                yield os.path.split(f)[-1], KeywordTagger.create_tagged_content(header, content)
     

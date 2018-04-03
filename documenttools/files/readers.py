@@ -24,7 +24,7 @@ def read_docx(f):
         sys.exit()
 
     document = docx.Document(f)
-    return ''.join([sanitize_string(p.text) for p in document.paragraphs])
+    return ' '.join([sanitize_string(p.text) for p in document.paragraphs])
 
 
 def read_txt(f):

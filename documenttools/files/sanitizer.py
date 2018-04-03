@@ -14,7 +14,8 @@ def sanitize_string(s):
     Raises:
         None.
     """
-    return ' '.join(re.findall(r'[a-zA-Z0-9]+', s))
+    return ' '.join(' '.join(re.findall(r'[ -~]+', s)).split())
+    # return ' '.join(re.findall(r'[a-zA-Z0-9]+', s))
 
 
 def sanitize_files_list(files, extensions): 

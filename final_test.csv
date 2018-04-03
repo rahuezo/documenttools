@@ -1,0 +1,5 @@
+Node Overlap,Edge Overlap,Unique Nodes for A,Unique Nodes for B,Unique Edges for A,Unique Edges for B
+A,A and B,,E,A and C,E and F
+C,C and B,,F,,C and E
+B,C and D,,,,
+D,,,,,

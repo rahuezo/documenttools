@@ -1,0 +1,10 @@
+N,o,d,e, ,O,v,e,r,l,a,p
+E,d,g,e, ,O,v,e,r,l,a,p
+U,n,i,q,u,e, ,N,o,d,e,s, ,f,o,r, ,A
+U,n,i,q,u,e, ,N,o,d,e,s, ,f,o,r, ,B
+U,n,i,q,u,e, ,E,d,g,e,s, ,f,o,r, ,A
+U,n,i,q,u,e, ,E,d,g,e,s, ,f,o,r, ,B
+A,"('A', 'B')",,E,"('A', 'C')","('E', 'F')"
+C,"('C', 'B')",,F,,"('C', 'E')"
+B,"('C', 'D')",,,,
+D,,,,,
