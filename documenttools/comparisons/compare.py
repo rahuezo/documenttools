@@ -10,6 +10,7 @@ except ImportError:
 from documenttools.files.readers import FileReader
 
 SHINGLE_SIZE = 3
+ONLINE = True
 
 
 def get_cosine_similarity(content1, content2):
@@ -40,7 +41,6 @@ def get_jaccard_similarity(content1, content2):
     return round(jasim, 4)
     
 
-
 def compare_documents(content1, content2):
     cosim = get_cosine_similarity(content1, content2)
     jasim = get_jaccard_similarity(content1, content2)
@@ -48,8 +48,12 @@ def compare_documents(content1, content2):
 
 
 class DocumentComparison: 
+    """
+    This class is used to compare a list of files against each other. The comparison 
+    yields the cosine and Jaccard similarity betweet two files.
+    """
     @staticmethod
-    def get_filename(f, online=False): 
+    def get_filename(f, online=ONLINE): 
         # Set online to True once used for website        
         return f if online else f.split('/')[-1]
 
@@ -57,6 +61,16 @@ class DocumentComparison:
         self.files = files
 
     def compare(self): 
+        """
+        This function compares a list of files against each other.
+
+        Args:
+            self.files: list of files to compare.
+
+        Returns: 
+            A dictionary with key = file pair, value = cosine similarity, Jaccard similarity. 
+            Returns None if no comparisons could be made. 
+        """ 
         comparisons = {}
         for i in xrange(len(self.files)): 
             for j in xrange(i + 1, len(self.files)): 
