@@ -8,8 +8,8 @@ class KeywordTagger:
     def create_tagged_content(header, content): 
         return 'Found Keywords: {hd}\n\n{ct}'.format(hd=header, ct=content)
 
-    def __init__(self, files, keywords): 
-        self.files = files
+    def __init__(self, input_file, keywords): 
+        self.file = input_file
         self.keywords = keywords
 
     def get_keyword_occurrences(self, content): 
@@ -24,16 +24,13 @@ class KeywordTagger:
         return content
 
     def tag(self): 
-        for f in self.files: 
-            reader = FileReader(f)
-            content = reader.read()
+        reader = FileReader(self.file)
+        content = reader.read()
+        
+        keyword_occurrences = self.get_keyword_occurrences(reader.normalize(content))
 
-            if not content: 
-                continue
-            
-            keyword_occurrences = self.get_keyword_occurrences(reader.normalize(content))
-
-            if keyword_occurrences: 
-                header = ', '.join(keyword_occurrences).upper()
-                yield os.path.split(f)[-1], KeywordTagger.create_tagged_content(header, content)
+        if keyword_occurrences: 
+            header = ', '.join(keyword_occurrences).upper()
+            return os.path.split(self.file)[-1], KeywordTagger.create_tagged_content(header, content)
+        return None
     
