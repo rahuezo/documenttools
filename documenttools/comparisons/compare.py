@@ -67,11 +67,10 @@ class DocumentComparison:
         Args:
             self.files: list of files to compare.
 
-        Returns: 
-            A dictionary with key = file pair, value = cosine similarity, Jaccard similarity. 
-            Returns None if no comparisons could be made. 
+        Yields: 
+            Generator of Filename1, Filename2, Cosine Similarity, Jaccard Similarity
         """ 
-        comparisons = {}
+
         for i in xrange(len(self.files)): 
             for j in xrange(i + 1, len(self.files)): 
                 f1 = self.files[i]
@@ -80,8 +79,5 @@ class DocumentComparison:
                 content1 = FileReader(f1).read()
                 content2 = FileReader(f2).read()
 
-                comparisons[(DocumentComparison.get_filename(f1), DocumentComparison.get_filename(f2))] = compare_documents(content1, content2)
-        return comparisons if comparisons else None
-
-        
+                yield (DocumentComparison.get_filename(f1), DocumentComparison.get_filename(f2)) + compare_documents(content1, content2)
 
