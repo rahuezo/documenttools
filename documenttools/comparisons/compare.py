@@ -79,5 +79,10 @@ class DocumentComparison:
                 content1 = FileReader(f1).read()
                 content2 = FileReader(f2).read()
 
-                yield (DocumentComparison.get_filename(f1), DocumentComparison.get_filename(f2)) + compare_documents(content1, content2)
+                fn1 = DocumentComparison.get_filename(f1)
+                fn2 = DocumentComparison.get_filename(f2)
+                
+                cosim, jasim = compare_documents(content1, content2)
+                
+                yield fn1, fn2, cosim, jasim
 
