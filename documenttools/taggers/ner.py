@@ -1,4 +1,11 @@
-from networktools.events.entities import stanford_ner_to_tree, Tree
+import sys 
+
+try: 
+    from networktools.events.entities import stanford_ner_to_tree, Tree
+except ImportError: 
+    print 'You need to install networktools first.'
+    sys.exit()
+
 from documenttools.files.readers import FileReader
 
 import tkFileDialog as fd
@@ -19,14 +26,14 @@ class NerTagger:
 
         return ' '.join(tagged_content)
 
-    def __init__(self, files): 
-        self.files = files
+    def __init__(self, input_file): 
+        self.file = input_file
 
     def tag(self): 
-        for f in self.files: 
-            reader = FileReader(f)
-            content = reader.read()
+        reader = FileReader(self.file)
+        extension = reader.get_extension()
+        content = reader.read()
+        
+        output_filename = self.file.replace('.{}'.format(extension), '_ner_tagged.{}'.format(extension))
 
-            if not content: 
-                continue
-            yield NerTagger.create_tagged_content(content)
+        return output_filename, NerTagger.create_tagged_content(content)
