@@ -8,7 +8,7 @@ setup(
     author='Rudy Huezo',
     author_email='rahuezo@ucdavis.edu',
     license='MIT',
-    packages=[],
+    packages=['documenttools', 'documenttools.files', 'documenttools.statistics', 'documenttools.taggers'],
     zip_safe=False
 
 )
