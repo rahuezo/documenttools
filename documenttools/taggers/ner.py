@@ -8,7 +8,6 @@ except ImportError:
 
 from documenttools.files.readers import FileReader
 
-import tkFileDialog as fd
 import re
 
 
