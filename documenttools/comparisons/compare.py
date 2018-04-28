@@ -7,7 +7,12 @@ except ImportError:
     print "You need to install sklearn. Try, sudo pip install sklearn"
     sys.exit()
 
-from documenttools.files.readers import FileReader
+try: 
+    from networktools.files.readers import FileReader
+except ImportError: 
+    print "You need to install networktools."
+    sys.exit()
+
 
 SHINGLE_SIZE = 3
 ONLINE = True
@@ -52,11 +57,6 @@ class DocumentComparison:
     This class is used to compare a list of files against each other. The comparison 
     yields the cosine and Jaccard similarity betweet two files.
     """
-    @staticmethod
-    def get_filename(f, online=ONLINE): 
-        # Set online to True once used for website        
-        return f if online else f.split('/')[-1]
-
     def __init__(self, files):
         self.files = files
 
@@ -67,22 +67,15 @@ class DocumentComparison:
         Args:
             self.files: list of files to compare.
 
-        Yields: 
-            Generator of Filename1, Filename2, Cosine Similarity, Jaccard Similarity
+        Returns: 
+            Comparisons list: Filename1, Filename2, Cosine Similarity, Jaccard Similarity
         """ 
+        comparisons = []
 
         for i in xrange(len(self.files)): 
             for j in xrange(i + 1, len(self.files)): 
-                f1 = self.files[i]
-                f2 = self.files[j]
+                f1, f2 = self.files[i], self.files[j]                
+                cosim, jasim = compare_documents(f1[1], f2[1])                
+                comparisons.append((f1[0], f2[0], cosim, jasim))
 
-                content1 = FileReader(f1).read()
-                content2 = FileReader(f2).read()
-
-                fn1 = DocumentComparison.get_filename(f1)
-                fn2 = DocumentComparison.get_filename(f2)
-                
-                cosim, jasim = compare_documents(content1, content2)
-                
-                yield fn1, fn2, cosim, jasim
-
+        return comparisons

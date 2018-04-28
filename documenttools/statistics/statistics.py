@@ -46,10 +46,10 @@ class DocumentStatistics:
         word_count = textstat.lexicon_count(content)
         keyword_frequency = map(lambda x: x[1], self.get_keyword_frequency(content))
         sentiment = DocumentStatistics.get_sentiment(content)
-        return [os.path.split(f)[-1], reading_level, word_count] + keyword_frequency + sentiment
+        return [f, reading_level, word_count] + keyword_frequency + sentiment
 
     def compute(self): 
-        reader = FileReader(self.file)
-        content = reader.read()
-        return self.get_statistics(self.file, content)
+        # reader = FileReader(self.file)
+        content = self.file[1] # reader.read()
+        return self.get_statistics(self.file[0], content)
         
